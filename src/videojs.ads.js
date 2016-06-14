@@ -3,8 +3,17 @@
  *
  * Common code to support ad integrations.
  */
-(function(window, videojs, undefined) {
-'use strict';
+ "use strict";
+(function(factory) {
+    if (typeof define === 'function' && define['amd']) {
+      define(['video.js'], function(vjs){ factory(window, document, vjs) });
+    } else if (typeof exports === 'object' && typeof module === 'object') {
+      factory(window, document, require('video.js'));
+    } else {
+      factory(window, document, videojs);
+    }
+})(function(window, document, videojs) {
+
 
 var
 
@@ -618,7 +627,7 @@ var
             if (!videojs.browser.IS_IOS && player.duration() === Infinity) {
               player.volume(this.preAdVolume_);
             }
-            
+
           },
           events: {
             'adend': function() {
@@ -837,4 +846,4 @@ var
   // register the ad plugin framework
   videojs.plugin('ads', adFramework);
 
-})(window, videojs);
+});
